@@ -16,6 +16,11 @@ class MainMenu: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UIView.animate(withDuration: 2) {
+            self.mainButton.alpha = 1
+            self.menuBackgroundImage.alpha = 1
+        }
+        
         applyMotionEffect(toView: menuBackgroundImage, magnitude: 10)
         applyMotionEffect(toView: mainButton, magnitude: -10)
     }

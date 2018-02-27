@@ -19,14 +19,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menuBackground" translatesAutoresizingMaskIntoConstraints="NO" id="WoV-bN-zDk">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menuBackground" translatesAutoresizingMaskIntoConstraints="NO" id="WoV-bN-zDk">
                                 <rect key="frame" x="-50" y="-50" width="767" height="475"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainButton" translatesAutoresizingMaskIntoConstraints="NO" id="yqV-k8-C6H">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainButton" translatesAutoresizingMaskIntoConstraints="NO" id="yqV-k8-C6H">
                                 <rect key="frame" x="-206.5" y="62.5" width="1080" height="250"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="WoV-bN-zDk" firstAttribute="bottom" secondItem="IQG-sc-0w0" secondAttribute="bottom" constant="50" id="Di4-Us-rSl"/>
                             <constraint firstItem="WoV-bN-zDk" firstAttribute="trailing" secondItem="IQG-sc-0w0" secondAttribute="trailing" constant="50" id="FQf-g9-7wv"/>
