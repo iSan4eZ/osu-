@@ -5,7 +5,8 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14086"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,17 +19,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background3Blured" translatesAutoresizingMaskIntoConstraints="NO" id="FmV-fQ-apj">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background3Blured" translatesAutoresizingMaskIntoConstraints="NO" id="FmV-fQ-apj">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mainButton" translatesAutoresizingMaskIntoConstraints="NO" id="Zh4-Hb-PXQ">
-                                <rect key="frame" x="224" y="78" width="219" height="219"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mainButton" translatesAutoresizingMaskIntoConstraints="NO" id="Zh4-Hb-PXQ">
+                                <rect key="frame" x="-206" y="63" width="1080" height="250"/>
                                 <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="8" trailing="8"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Zh4-Hb-PXQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1cz-6D-MrM"/>
+                            <constraint firstItem="FmV-fQ-apj" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="CzO-2b-SlK"/>
+                            <constraint firstItem="Zh4-Hb-PXQ" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="2:3" id="HND-ic-DlB"/>
+                            <constraint firstItem="FmV-fQ-apj" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="YAL-KX-gJO"/>
+                            <constraint firstItem="Zh4-Hb-PXQ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="esb-ac-nZY"/>
+                            <constraint firstItem="FmV-fQ-apj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iJH-Jm-XMw"/>
+                            <constraint firstItem="FmV-fQ-apj" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="tKS-Bf-qfv"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
