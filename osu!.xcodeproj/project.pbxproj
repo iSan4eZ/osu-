@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7281F47E20460042006871E9 /* LibraryMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7281F47D20460042006871E9 /* LibraryMenu.swift */; };
 		72CEC9D320459BFD00E8A818 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CEC9D220459BFD00E8A818 /* AppDelegate.swift */; };
 		72CEC9D520459BFD00E8A818 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 72CEC9D420459BFD00E8A818 /* GameScene.sks */; };
 		72CEC9D720459BFD00E8A818 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 72CEC9D620459BFD00E8A818 /* Actions.sks */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7281F47D20460042006871E9 /* LibraryMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryMenu.swift; sourceTree = "<group>"; };
 		72CEC9CF20459BFD00E8A818 /* osu!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "osu!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72CEC9D220459BFD00E8A818 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		72CEC9D420459BFD00E8A818 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				72CEC9D820459BFD00E8A818 /* GameScene.swift */,
 				72CEC9DA20459BFD00E8A818 /* GameViewController.swift */,
 				72CEC9EA2045B1C500E8A818 /* MainMenu.swift */,
+				7281F47D20460042006871E9 /* LibraryMenu.swift */,
 				72CEC9DC20459BFD00E8A818 /* Main.storyboard */,
 				72CEC9DF20459BFF00E8A818 /* Assets.xcassets */,
 				72CEC9E120459BFF00E8A818 /* LaunchScreen.storyboard */,
@@ -153,6 +156,7 @@
 				72CEC9DB20459BFD00E8A818 /* GameViewController.swift in Sources */,
 				72CEC9D320459BFD00E8A818 /* AppDelegate.swift in Sources */,
 				72CEC9EB2045B1C500E8A818 /* MainMenu.swift in Sources */,
+				7281F47E20460042006871E9 /* LibraryMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
