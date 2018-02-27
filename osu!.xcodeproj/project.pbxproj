@@ -15,6 +15,7 @@
 		72CEC9DE20459BFD00E8A818 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72CEC9DC20459BFD00E8A818 /* Main.storyboard */; };
 		72CEC9E020459BFF00E8A818 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72CEC9DF20459BFF00E8A818 /* Assets.xcassets */; };
 		72CEC9E320459BFF00E8A818 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72CEC9E120459BFF00E8A818 /* LaunchScreen.storyboard */; };
+		72CEC9EB2045B1C500E8A818 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CEC9EA2045B1C500E8A818 /* MainMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		72CEC9DF20459BFF00E8A818 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72CEC9E220459BFF00E8A818 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		72CEC9E420459BFF00E8A818 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		72CEC9EA2045B1C500E8A818 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				72CEC9D620459BFD00E8A818 /* Actions.sks */,
 				72CEC9D820459BFD00E8A818 /* GameScene.swift */,
 				72CEC9DA20459BFD00E8A818 /* GameViewController.swift */,
+				72CEC9EA2045B1C500E8A818 /* MainMenu.swift */,
 				72CEC9DC20459BFD00E8A818 /* Main.storyboard */,
 				72CEC9DF20459BFF00E8A818 /* Assets.xcassets */,
 				72CEC9E120459BFF00E8A818 /* LaunchScreen.storyboard */,
@@ -149,6 +152,7 @@
 				72CEC9D920459BFD00E8A818 /* GameScene.swift in Sources */,
 				72CEC9DB20459BFD00E8A818 /* GameViewController.swift in Sources */,
 				72CEC9D320459BFD00E8A818 /* AppDelegate.swift in Sources */,
+				72CEC9EB2045B1C500E8A818 /* MainMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
