@@ -13,15 +13,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    let main = MainMenu()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url)
-        return true
+        print("External URL to unzip: \(url)")
+        if url.startAccessingSecurityScopedResource(){
+            print("File exists in App Delegate: \(FileManager.default.fileExists(atPath: url.path))")
+            main.unZip(url: url, deleteAfter: false)
+            return true
+        } else {
+            return false
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
