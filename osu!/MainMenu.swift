@@ -94,7 +94,14 @@ class MainMenu: UIViewController {
         do {
             let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
             for url in fileURLs{
-                print("\nExtension: \(url.pathExtension)")
+                if url.lastPathComponent == "Library"{
+                    let libUrls = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
+                    for libUrl in libUrls{
+                        if url.pathExtension == "osz"{
+                            unZip(url: url, deleteAfter: true)
+                        }
+                    }
+                }
                 if url.pathExtension == "osz"{
                     unZip(url: url, deleteAfter: true)
                 }
@@ -105,9 +112,6 @@ class MainMenu: UIViewController {
     }
     
     func unZip(url: URL, deleteAfter: Bool){
-        /*
-         -По отправленному URL разархивировать содержимое в папку Library. После этого удалять архив
-         */
         do
         {
             let manager = FileManager.default
@@ -117,12 +121,6 @@ class MainMenu: UIViewController {
                 try manager.removeItem(at: url)
             }
             url.stopAccessingSecurityScopedResource()
-            /*let unzipDirectory = try Zip.quickUnzipFile(url)
-            print("Unziped Directory: \(unzipDirectory)")
-            let path = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Library/\(url.deletingPathExtension().lastPathComponent)", isDirectory: true)
-            print("Unzip path: \(path)")
-            try fileManager.createDirectory(at: path, withIntermediateDirectories: true, attributes: nil)
-            try fileManager.moveItem(at: unzipDirectory, to: path)*/
         } catch {
             print("Error while unzipping: \(error)\n")
         }
