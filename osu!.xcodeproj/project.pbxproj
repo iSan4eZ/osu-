@@ -17,9 +17,13 @@
 		72CEC9E020459BFF00E8A818 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72CEC9DF20459BFF00E8A818 /* Assets.xcassets */; };
 		72CEC9E320459BFF00E8A818 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72CEC9E120459BFF00E8A818 /* LaunchScreen.storyboard */; };
 		72CEC9EB2045B1C500E8A818 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CEC9EA2045B1C500E8A818 /* MainMenu.swift */; };
+		9EF58A4FFB600F3D3BFC644A /* Pods_osu_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C038C3F410A5D7AF2407E74 /* Pods_osu_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1796F28AF93ADDE038E97533 /* Pods-osu!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osu!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-osu!/Pods-osu!.debug.xcconfig"; sourceTree = "<group>"; };
+		4EF48D8795E0B7C3E1826FCC /* Pods-osu!.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osu!.release.xcconfig"; path = "Pods/Target Support Files/Pods-osu!/Pods-osu!.release.xcconfig"; sourceTree = "<group>"; };
+		6C038C3F410A5D7AF2407E74 /* Pods_osu_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_osu_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7281F47D20460042006871E9 /* LibraryMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryMenu.swift; sourceTree = "<group>"; };
 		72CEC9CF20459BFD00E8A818 /* osu!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "osu!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72CEC9D220459BFD00E8A818 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,17 +43,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EF58A4FFB600F3D3BFC644A /* Pods_osu_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E91EC4391CE730805E37BD1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1796F28AF93ADDE038E97533 /* Pods-osu!.debug.xcconfig */,
+				4EF48D8795E0B7C3E1826FCC /* Pods-osu!.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		46E817AAF6DE0943CF4457FE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6C038C3F410A5D7AF2407E74 /* Pods_osu_.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		72CEC9C620459BFD00E8A818 = {
 			isa = PBXGroup;
 			children = (
 				72CEC9D120459BFD00E8A818 /* osu! */,
 				72CEC9D020459BFD00E8A818 /* Products */,
+				3E91EC4391CE730805E37BD1 /* Pods */,
+				46E817AAF6DE0943CF4457FE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 72CEC9E720459BFF00E8A818 /* Build configuration list for PBXNativeTarget "osu!" */;
 			buildPhases = (
+				98676ECF82EE620BFBDEC0FB /* [CP] Check Pods Manifest.lock */,
 				72CEC9CB20459BFD00E8A818 /* Sources */,
 				72CEC9CC20459BFD00E8A818 /* Frameworks */,
 				72CEC9CD20459BFD00E8A818 /* Resources */,
+				D1A69840EF1C0E51C5C25034 /* [CP] Embed Pods Frameworks */,
+				C300DF1A61BFEEBA7F6107E3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -146,6 +173,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		98676ECF82EE620BFBDEC0FB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-osu!-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C300DF1A61BFEEBA7F6107E3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-osu!/Pods-osu!-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D1A69840EF1C0E51C5C25034 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-osu!/Pods-osu!-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Zip/Zip.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Zip.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-osu!/Pods-osu!-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		72CEC9CB20459BFD00E8A818 /* Sources */ = {
@@ -298,16 +379,14 @@
 		};
 		72CEC9E820459BFF00E8A818 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1796F28AF93ADDE038E97533 /* Pods-osu!.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VW33B85K5;
 				INFOPLIST_FILE = "osu!/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.isan4ez.osu-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -318,16 +397,14 @@
 		};
 		72CEC9E920459BFF00E8A818 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4EF48D8795E0B7C3E1826FCC /* Pods-osu!.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VW33B85K5;
 				INFOPLIST_FILE = "osu!/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.isan4ez.osu-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
