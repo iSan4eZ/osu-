@@ -6,8 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14086"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,11 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menuBackground" translatesAutoresizingMaskIntoConstraints="NO" id="WoV-bN-zDk">
-                                <rect key="frame" x="-50" y="-50" width="767" height="475"/>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="menuBackground" translatesAutoresizingMaskIntoConstraints="NO" id="WoV-bN-zDk">
+                                <rect key="frame" x="-1166.5" y="-580.5" width="3000" height="1536"/>
                             </imageView>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kLT-Z1-YeV">
-                                <rect key="frame" x="208" y="62" width="250" height="250"/>
+                                <rect key="frame" x="-206.5" y="-352" width="1080.5" height="1080.5"/>
                                 <state key="normal" image="mainButton"/>
                                 <connections>
                                     <action selector="mainButtonClicked:" destination="yVe-SQ-2CV" eventType="touchUpInside" id="1uN-Ea-Joz"/>
@@ -33,16 +31,22 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="WoV-bN-zDk" firstAttribute="bottom" secondItem="IQG-sc-0w0" secondAttribute="bottom" constant="50" id="Di4-Us-rSl"/>
-                            <constraint firstItem="WoV-bN-zDk" firstAttribute="trailing" secondItem="IQG-sc-0w0" secondAttribute="trailing" constant="50" id="FQf-g9-7wv"/>
-                            <constraint firstItem="WoV-bN-zDk" firstAttribute="top" secondItem="IQG-sc-0w0" secondAttribute="top" constant="-50" id="HhI-mO-GR3"/>
-                            <constraint firstItem="kLT-Z1-YeV" firstAttribute="height" secondItem="IQG-sc-0w0" secondAttribute="height" multiplier="2:3" id="IV7-Uy-fCB"/>
+                            <constraint firstItem="IQG-sc-0w0" firstAttribute="leading" secondItem="WoV-bN-zDk" secondAttribute="leading" constant="50" id="1Ax-yO-MkD"/>
                             <constraint firstItem="kLT-Z1-YeV" firstAttribute="centerY" secondItem="E6S-9C-hbe" secondAttribute="centerY" id="ZhG-nc-eRZ"/>
                             <constraint firstItem="kLT-Z1-YeV" firstAttribute="centerX" secondItem="E6S-9C-hbe" secondAttribute="centerX" id="aDV-sZ-ORw"/>
-                            <constraint firstItem="kLT-Z1-YeV" firstAttribute="width" secondItem="IQG-sc-0w0" secondAttribute="height" multiplier="2:3" id="i0h-f4-zR2"/>
-                            <constraint firstItem="WoV-bN-zDk" firstAttribute="leading" secondItem="IQG-sc-0w0" secondAttribute="leading" constant="-50" id="sSx-vP-uMo"/>
+                            <constraint firstItem="WoV-bN-zDk" firstAttribute="trailing" secondItem="IQG-sc-0w0" secondAttribute="trailing" constant="50" id="dk6-39-v99"/>
+                            <constraint firstItem="IQG-sc-0w0" firstAttribute="top" secondItem="WoV-bN-zDk" secondAttribute="top" constant="50" id="i1p-gT-ijU"/>
+                            <constraint firstItem="WoV-bN-zDk" firstAttribute="bottom" secondItem="IQG-sc-0w0" secondAttribute="bottom" constant="50" id="jDP-ao-LVs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IQG-sc-0w0"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1Ax-yO-MkD"/>
+                                <exclude reference="i1p-gT-ijU"/>
+                                <exclude reference="dk6-39-v99"/>
+                                <exclude reference="jDP-ao-LVs"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="mainButton" destination="kLT-Z1-YeV" id="r3i-my-ufs"/>

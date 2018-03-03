@@ -13,17 +13,42 @@ class MainMenu: UIViewController {
     @IBOutlet weak var mainButton: UIButton!
     @IBOutlet weak var menuBackgroundImage: UIImageView!
     
+    var initialConstraints = [NSLayoutConstraint]()
+    var newConstraints = [NSLayoutConstraint]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initialConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
+        initialConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
+        initialConstraints.append(self.menuBackgroundImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor))
+        initialConstraints.append(self.menuBackgroundImage.bottomAnchor.constraint(equalTo: self.view.bottomAnchor))
+        initialConstraints.append(self.menuBackgroundImage.topAnchor.constraint(equalTo: self.view.topAnchor))
+        initialConstraints.append(self.menuBackgroundImage.leadingAnchor.constraint(equalTo: self.view.leadingAnchor))
+        
+        NSLayoutConstraint.activate(initialConstraints)
+        self.mainButton.layoutIfNeeded()
+        self.menuBackgroundImage.layoutIfNeeded()
+        
+        NSLayoutConstraint.deactivate(self.initialConstraints)
+        
+        newConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 2/3))
+        newConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 2/3))
+        newConstraints.append(self.menuBackgroundImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 50))
+        newConstraints.append(self.menuBackgroundImage.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 50))
+        newConstraints.append(self.menuBackgroundImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -50))
+        newConstraints.append(self.menuBackgroundImage.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: -50))
+        
+        NSLayoutConstraint.activate(self.newConstraints)
+        
+        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseOut, animations: {
+            self.mainButton.superview!.layoutIfNeeded()
+        }, completion: nil)
         UIView.animate(withDuration: 2) {
             self.mainButton.alpha = 1
             self.menuBackgroundImage.alpha = 1
         }
         
-        /*
-         -Убрать Constrains от кнопки и сделать анимацию её приближения во время появления
-         */
         
         applyMotionEffect(toView: menuBackgroundImage, magnitude: 10)
         applyMotionEffect(toView: mainButton, magnitude: -10)
