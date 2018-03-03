@@ -85,28 +85,36 @@ class MainMenu: UIViewController {
     }
     
     func prepareLibrary(){
-        /*
-         -Распаковывать скины, если есть
-         */
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         do {
             let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
             for url in fileURLs{
-                if url.lastPathComponent == "Library"{
-                    let libUrls = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
-                    for libUrl in libUrls{
-                        if libUrl.pathExtension == "osz"{
-                            unZip(url: libUrl, deleteAfter: true)
-                        }
-                    }
-                }
-                if url.pathExtension == "osz"{
-                    unZip(url: url, deleteAfter: true)
-                }
+                parseUnZip(url: url, current: 1, max: 2)
             }
         } catch {
             print("Error while enumerating files")
+        }
+    }
+    
+    func parseUnZip(url: URL, current: Int, max: Int){
+        if current <= max{
+            let manager = FileManager.default
+            var isDir : ObjCBool?
+            if manager.fileExists(atPath: url.path, isDirectory: &isDir!) {
+                do
+                {
+                    for file in try manager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil){
+                        parseUnZip(url: file, current: current+1, max: max)
+                    }
+                } catch {
+                    print("parseUnZip error: \(error)")
+                }
+            } else {
+                if url.pathExtension == "osz" || url.pathExtension == "osk"{
+                    unZip(url: url, deleteAfter: true)
+                }
+            }
         }
     }
     
@@ -114,7 +122,15 @@ class MainMenu: UIViewController {
         do
         {
             let manager = FileManager.default
-            let documentsDirectory = manager.urls(for:.documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Library/\(url.deletingPathExtension().lastPathComponent)", isDirectory: true)
+            var documentsDirectory : URL!
+            if url.pathExtension == "osz"{
+                documentsDirectory = manager.urls(for:.documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Songs/\(url.deletingPathExtension().lastPathComponent)", isDirectory: true)
+            } else if url.pathExtension == "osk" {
+                documentsDirectory = manager.urls(for:.documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Skins/\(url.deletingPathExtension().lastPathComponent)", isDirectory: true)
+            } else {
+                print("Detected not osu package")
+                return
+            }
             try Zip.unzipFile(url, destination: documentsDirectory, overwrite: true, password: nil)
             if deleteAfter{
                 try manager.removeItem(at: url)
