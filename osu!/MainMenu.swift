@@ -86,9 +86,8 @@ class MainMenu: UIViewController {
     
     func prepareLibrary(){
         /*
-         -Каждый url в общедоступном каталоге приложения (который из Files открывается) проверять на .zip. Если .zip, то вызывать unZip().
-         -В локальном хранилище создавать, если отсутствует, папку Library, в которой будут все карты, а так же Skins для скинов.
-        */
+         -Распаковывать скины, если есть
+         */
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         do {
@@ -97,8 +96,8 @@ class MainMenu: UIViewController {
                 if url.lastPathComponent == "Library"{
                     let libUrls = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
                     for libUrl in libUrls{
-                        if url.pathExtension == "osz"{
-                            unZip(url: url, deleteAfter: true)
+                        if libUrl.pathExtension == "osz"{
+                            unZip(url: libUrl, deleteAfter: true)
                         }
                     }
                 }
