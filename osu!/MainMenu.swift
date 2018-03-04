@@ -82,6 +82,11 @@ class MainMenu: UIViewController {
          -В настройки добавить выключатель параллакс эффекта, задание настроек для карт по умолчанию, например, будет ли проигрываться видео, непрозрачность фонового изображения и прочая хрень, связанная с этим. Так же туда ещё выбор скинов и настройку громкости.
          -Все настройки хранить в файлике Settings, расположенном в локальном, доступном пользователю хранилище
          */
+        let LibraryMenuVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryMenuVC")
+        present(LibraryMenuVC, animated: true) {
+            print("Completed")
+            //completition code
+        }
     }
     
     func prepareLibrary(){
@@ -100,12 +105,13 @@ class MainMenu: UIViewController {
     func parseUnZip(url: URL, current: Int, max: Int){
         if current <= max{
             let manager = FileManager.default
-            var isDir : ObjCBool?
-            if manager.fileExists(atPath: url.path, isDirectory: &isDir!) {
+            if url.isDirectory && !url.path.contains(".Trash") {
                 do
                 {
                     for file in try manager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil){
-                        parseUnZip(url: file, current: current+1, max: max)
+                        if current + 1 <= max{
+                            parseUnZip(url: file, current: current+1, max: max)
+                        }
                     }
                 } catch {
                     print("parseUnZip error: \(error)")
@@ -144,5 +150,18 @@ class MainMenu: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension URL {
+    var isDirectory: Bool {
+        return (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
+    }
+    var subDirectories: [URL] {
+        guard isDirectory else { return [] }
+        return (try? FileManager.default.contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter{ $0.isDirectory }) ?? []
+    }
+    func filesOfType(fileType: String) -> [URL]{
+        return (try? FileManager.default.contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter{ $0.pathExtension == fileType }) ?? []
     }
 }

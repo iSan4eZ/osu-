@@ -24,15 +24,14 @@ class LibraryMenu: UIViewController {
     }
     
     var Library = [Song]()
-    /*
-     -Тут будет структура "Song" и массив "Library" из треков.
-     -Track должен в себе хранить URL'ы на все сложности (.osu файлы в папке с картой)
-     -Каждая сложность - отдельная структура, содержащая URL'ы на музыку, фоновую картинку, файл .osu, скин по умолчанию и прочее, что может относиться к сложности
-     */
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadLibrary()
+    }
+    
+    @IBAction func backClicked(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func loadLibrary(){
@@ -40,6 +39,16 @@ class LibraryMenu: UIViewController {
          -Проходить по всем папкам в Songs локального хранилища и добавлять в массив Library все карты и сложности.
          -Выводить в список все эти карты и включать какую-то рандомную, вызывая mapSelected()
          */
+        let fileManager = FileManager.default
+        let libraryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Songs", isDirectory: true)
+        let dirsURLs = libraryURL.subDirectories
+        for url in dirsURLs{
+            var song = Song(url: url, name: url.lastPathComponent, diffs: [Diff]())
+            for file in url.filesOfType(fileType: "osu"){
+                song.diffs.append(Diff(fileUrl: file))
+            }
+            Library.append(song)
+        }
     }
     
     func mapSelected(index: Int){

@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="menuBackground" translatesAutoresizingMaskIntoConstraints="NO" id="WoV-bN-zDk">
-                                <rect key="frame" x="-1166.5" y="-580.5" width="3000" height="1536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                             </imageView>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kLT-Z1-YeV">
                                 <rect key="frame" x="-206.5" y="-352" width="1080.5" height="1080.5"/>
@@ -55,16 +55,29 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WYP-CQ-8Je" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-508.69565217391306" y="133.59999999999999"/>
+            <point key="canvasLocation" x="-590.55472263868069" y="133.59999999999999"/>
         </scene>
         <!--Library Menu-->
         <scene sceneID="zN8-P4-aic">
             <objects>
-                <viewController id="5DW-Qo-CEw" customClass="LibraryMenu" customModule="osu_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LibraryMenuVC" id="5DW-Qo-CEw" customClass="LibraryMenu" customModule="osu_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6ng-eN-JWQ">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nN4-q4-Gib">
+                                <rect key="frame" x="15" y="330" width="34" height="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backClicked:" destination="5DW-Qo-CEw" eventType="touchUpInside" id="oRm-d4-L2Y"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="nN4-q4-Gib" firstAttribute="bottom" secondItem="HHM-rf-F16" secondAttribute="bottom" constant="-15" id="SWn-A2-StN"/>
+                            <constraint firstItem="nN4-q4-Gib" firstAttribute="leading" secondItem="HHM-rf-F16" secondAttribute="leading" constant="15" id="aY2-yB-6mn"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="HHM-rf-F16"/>
                     </view>
                 </viewController>
@@ -75,7 +88,7 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="osu_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameVC" id="BV1-FR-VrT" customClass="GameViewController" customModule="osu_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -85,7 +98,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="727" y="134"/>
+            <point key="canvasLocation" x="804" y="134"/>
         </scene>
     </scenes>
     <resources>
