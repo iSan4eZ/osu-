@@ -107,23 +107,20 @@ class LibraryMenu: UIViewController, UITableViewDelegate, UITableViewDataSource 
         return cell
     }
     
-    enum MyError : Error {
-        case RuntimeError(String)
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         /*
-         -Вызывается при смене выбранной сложности.
-         -Должен менять фон на фон карты, включать музыку этой карты и выводить инфу о ней.
+         -Вызывается при смене выбранной ячейки из tvSongs. Надо, чтобы там отображались только Song'и и, после выбора определённого, выдвигались его сложности. Ниже есть MapSelected, правда, не знаю, зачем
          */
         let selectedCell = tableView.cellForRow(at: indexPath) as! CustomSongCell
         backgroundImageView.image = UIImage(contentsOfFile: selectedCell.difficulty.imageUrl!.path)
         if player?.url != selectedCell.difficulty.audioUrl{
             do {
                 player = try AVAudioPlayer(contentsOf: selectedCell.difficulty.audioUrl)
-                
-                guard let player = player else { throw MyError.RuntimeError("Cant do player = player") }
-                player.play()
+                player!.numberOfLoops = -1
+                player!.prepareToPlay()
+                let audioSession = AVAudioSession.sharedInstance()
+                try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+                player!.play()
             } catch {
                 print("Erorr playing audio: \(error)")
             }
@@ -131,10 +128,6 @@ class LibraryMenu: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     
     func loadLibrary(){
-        /*
-         -Проходить по всем папкам в Songs локального хранилища и добавлять в массив Library все карты и сложности.
-         -Выводить в список все эти карты и включать какую-то рандомную, вызывая mapSelected()
-         */
         let fileManager = FileManager.default
         let libraryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Songs", isDirectory: true)
         let dirsURLs = libraryURL.subDirectories
@@ -151,7 +144,7 @@ class LibraryMenu: UIViewController, UITableViewDelegate, UITableViewDataSource 
         /*
          -Вызывается при смене выбранной карты.
          -Должен открывать все сложности карты и выбирать максимальную сложность из тех, которые пройдены
-         -После выбора сложности вызввать difficultySelected(index: Int)
+         -После выбора сложности вызввать метод смены сложности
          */
     }
     
