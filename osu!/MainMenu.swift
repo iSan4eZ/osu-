@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Zip
+import AVFoundation
 
 class MainMenu: UIViewController {
 
@@ -18,6 +20,7 @@ class MainMenu: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Zip.addCustomFileExtension("osz")
         
         initialConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
         initialConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
@@ -78,25 +81,89 @@ class MainMenu: UIViewController {
          -По нажатию на "Play" вызывать LibraryMenu сцену.
          -По нажатию на "Settings" вызывать выдвигающееся откуда-нибудь меню с настройками.
          -В настройки добавить выключатель параллакс эффекта, задание настроек для карт по умолчанию, например, будет ли проигрываться видео, непрозрачность фонового изображения и прочая хрень, связанная с этим. Так же туда ещё выбор скинов и настройку громкости.
-         -Все настройки хранить в файлике Settings, расположенном в локальном, спрятанном от юзера, хранилище
+         -Все настройки хранить в файлике Settings, расположенном в локальном, доступном пользователю хранилище
          */
+        prepareLibrary()
+        let LibraryMenuVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryMenuVC")
+        present(LibraryMenuVC, animated: true) {
+            print("Completed")
+            //completition code
+        }
     }
     
     func prepareLibrary(){
-        /*
-         -Каждый url в общедоступном каталоге приложения (который из Files открывается) проверять на .zip. Если .zip, то вызывать unZip().
-         -В локальном хранилище создавать, если отсутствует, папку Library, в которой будут все карты, а так же Skins для скинов.
-        */
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        do {
+            let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
+            for url in fileURLs{
+                parseUnZip(url: url, current: 1, max: 2)
+            }
+        } catch {
+            print("Error while enumerating files")
+        }
     }
     
-    func unZip(url: URL){
-        /*
-         -По отправленному URL разархивировать содержимое в спрятанную папку Library. После этого либо удалять архив
-         */
+    func parseUnZip(url: URL, current: Int, max: Int){
+        if current <= max{
+            let manager = FileManager.default
+            if url.isDirectory && !url.path.contains(".Trash") {
+                do
+                {
+                    for file in try manager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil){
+                        if current + 1 <= max{
+                            parseUnZip(url: file, current: current+1, max: max)
+                        }
+                    }
+                } catch {
+                    print("parseUnZip error: \(error)")
+                }
+            } else {
+                if url.pathExtension == "osz" || url.pathExtension == "osk"{
+                    unZip(url: url, deleteAfter: true)
+                }
+            }
+        }
+    }
+    
+    func unZip(url: URL, deleteAfter: Bool){
+        do
+        {
+            let manager = FileManager.default
+            var documentsDirectory : URL!
+            if url.pathExtension == "osz"{
+                documentsDirectory = manager.urls(for:.documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Songs/\(url.deletingPathExtension().lastPathComponent)", isDirectory: true)
+            } else if url.pathExtension == "osk" {
+                documentsDirectory = manager.urls(for:.documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Skins/\(url.deletingPathExtension().lastPathComponent)", isDirectory: true)
+            } else {
+                print("Detected not osu package")
+                return
+            }
+            try Zip.unzipFile(url, destination: documentsDirectory, overwrite: true, password: nil)
+            if deleteAfter{
+                try manager.removeItem(at: url)
+            }
+            url.stopAccessingSecurityScopedResource()
+        } catch {
+            print("Error while unzipping: \(error)\n")
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+extension URL {
+    var isDirectory: Bool {
+        return (try? resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
+    }
+    var subDirectories: [URL] {
+        guard isDirectory else { return [] }
+        return (try? FileManager.default.contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter{ $0.isDirectory }) ?? []
+    }
+    func filesOfType(fileType: String) -> [URL]{
+        return (try? FileManager.default.contentsOfDirectory(at: self, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter{ $0.pathExtension == fileType }) ?? []
     }
 }
