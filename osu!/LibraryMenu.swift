@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-class LibraryMenu: UIViewController {
+class LibraryMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     struct Song {
         var url : URL!
@@ -25,13 +26,108 @@ class LibraryMenu: UIViewController {
     
     var Library = [Song]()
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var tvSongs: UITableView!
+    
+    var player: AVAudioPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.backgroundImageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 50),
+            self.backgroundImageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 50),
+            self.backgroundImageView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -50),
+            self.backgroundImageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: -50)
+            ])
+        backgroundImageView.superview!.layoutIfNeeded()
+        
+        applyMotionEffect(toView: backgroundImageView, magnitude: 10)
+        tvSongs.delegate = self
+        tvSongs.dataSource = self
         loadLibrary()
+        let randomIndex = Int(arc4random_uniform(UInt32(tvSongs.numberOfRows(inSection: 0))))
+        tvSongs.selectRow(at: IndexPath(row: randomIndex, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.middle)
+        tableView(tvSongs, didSelectRowAt: IndexPath(row: randomIndex, section: 0))
+    }
+    
+    func applyMotionEffect (toView view:UIView, magnitude: Float){
+        let xMotion = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+        xMotion.minimumRelativeValue = -magnitude
+        xMotion.maximumRelativeValue = magnitude
+        
+        let yMotion = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+        yMotion.minimumRelativeValue = -magnitude
+        yMotion.maximumRelativeValue = magnitude
+        
+        let group = UIMotionEffectGroup()
+        group.motionEffects = [xMotion, yMotion]
+        
+        view.addMotionEffect(group)
     }
     
     @IBAction func backClicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func playClicked(_ sender: Any) {
+        //Play clicked
+        player?.stop()
+        let GameVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GameVC")
+        present(GameVC, animated: true) {
+            print("Completed")
+            //completition code
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        var count = 0
+        for song in Library{
+            count += song.diffs.count
+        }
+        return count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = tvSongs.dequeueReusableCell(withIdentifier: "songCell") as! CustomSongCell
+        
+        var index = 0
+        for i in 0...Library.count-1{
+            for j in 0...Library[i].diffs.count-1{
+                if index == indexPath.row{
+                    cell.nameLbl.text = Library[i].diffs[j].metadata.Title
+                    cell.diffLbl.text = Library[i].diffs[j].metadata.Version
+                    cell.difficulty = Library[i].diffs[j]
+                }
+                index += 1
+            }
+        }
+        
+        return cell
+    }
+    
+    enum MyError : Error {
+        case RuntimeError(String)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*
+         -Вызывается при смене выбранной сложности.
+         -Должен менять фон на фон карты, включать музыку этой карты и выводить инфу о ней.
+         */
+        let selectedCell = tableView.cellForRow(at: indexPath) as! CustomSongCell
+        backgroundImageView.image = UIImage(contentsOfFile: selectedCell.difficulty.imageUrl!.path)
+        if player?.url != selectedCell.difficulty.audioUrl{
+            do {
+                player = try AVAudioPlayer(contentsOf: selectedCell.difficulty.audioUrl)
+                
+                guard let player = player else { throw MyError.RuntimeError("Cant do player = player") }
+                player.play()
+            } catch {
+                print("Erorr playing audio: \(error)")
+            }
+        }
     }
     
     func loadLibrary(){
@@ -60,10 +156,6 @@ class LibraryMenu: UIViewController {
     }
     
     func difficultySelected(index: Int){
-        /*
-         -Вызывается при смене выбранной сложности.
-         -Должен менять фон на фон карты, включать музыку этой карты и выводить инфу о ней.
-         */
     }
 
     override func didReceiveMemoryWarning() {

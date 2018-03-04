@@ -12,6 +12,8 @@ class Diff {
     var version : Int!
     var url : URL!
     var osb : OSB!
+    var audioUrl : URL!
+    var imageUrl : URL!
     
     struct OSB{
         //анимация фона
@@ -36,6 +38,16 @@ class Diff {
         case timingPoints
         case colours
         case hitObjects
+    }
+    
+    enum eventsPart {
+        case BackgroundAndVideo
+        case BreakPeriods
+        case StoryboardBackground
+        case StoryboardFail
+        case StoryboardPass
+        case StoryboardForeground
+        case StoryboardSoundSamples
     }
     
     struct General {
@@ -87,6 +99,11 @@ class Diff {
     }
     
     struct Events {
+        var background = BackgroundImage()
+        
+        struct BackgroundImage{
+            var imageName : String?
+        }
         /*
          -Сделать
          */
@@ -155,6 +172,7 @@ class Diff {
     }
     
     private var stage : Part!
+    private var eventsStage : eventsPart!
     
     init(fileUrl: URL) {
         do
@@ -204,6 +222,7 @@ class Diff {
                             let value = line.components(separatedBy: " ")[1]
                             if line.contains("AudioFilename:") {
                                 general.AudioFilename = value
+                                audioUrl = url.deletingLastPathComponent().appendingPathComponent(value)
                             } else if line.contains("AudioLeadIn:") {
                                 general.AudioLeadIn = value.toInt
                             } else if line.contains("PreviewTime:") {
@@ -288,10 +307,39 @@ class Diff {
                             /*
                              -Сделать
                              */
+                            if line == "//Background and Video events" {
+                                eventsStage = .BackgroundAndVideo
+                            } else if line == "//Break Periods"{
+                                eventsStage = .BreakPeriods
+                            } else if line == "//Storyboard Layer 0 (Background)"{
+                                eventsStage = .StoryboardBackground
+                            } else if line == "//Storyboard Layer 1 (Fail)"{
+                                eventsStage = .StoryboardFail
+                            } else if line == "//Storyboard Layer 2 (Pass)"{
+                                eventsStage = .StoryboardPass
+                            } else if line == "//Storyboard Layer 3 (Foreground)"{
+                                eventsStage = .StoryboardForeground
+                            } else if line == "//Storyboard Sound Samples"{
+                                eventsStage = .StoryboardSoundSamples
+                            }
+                            
+                            if !line.starts(with: "//")
+                            {
+                                let value = line.components(separatedBy: ",")
+                                if eventsStage == .BackgroundAndVideo {
+                                    if value[0] == "Video"{
+                                        //video
+                                    } else {
+                                        //background image
+                                        events.background.imageName = value[2].replacingOccurrences(of: "\"", with: "")
+                                        imageUrl = url.deletingLastPathComponent().appendingPathComponent(value[2].replacingOccurrences(of: "\"", with: ""))
+                                    }
+                                }
+                            }
                         } else if stage == .timingPoints {
                             let value = line.components(separatedBy: ",")
                             var tPoint = TimingPoint()
-                            for i in 0...value.count{
+                            for i in 0...value.count-1{
                                 switch i{
                                 case 0:
                                     tPoint.Offset = value[i].toInt
@@ -324,7 +372,7 @@ class Diff {
                         } else if stage == .hitObjects {
                             let value = line.components(separatedBy: ",")
                             var hObject = HitObject()
-                            for i in 0...value.count{
+                            for i in 0...value.count-1{
                                 switch i{
                                 case 0:
                                     hObject.x = value[i].toInt

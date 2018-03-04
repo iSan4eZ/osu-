@@ -8,6 +8,7 @@
 
 import UIKit
 import Zip
+import AVFoundation
 
 class MainMenu: UIViewController {
 
@@ -82,6 +83,7 @@ class MainMenu: UIViewController {
          -В настройки добавить выключатель параллакс эффекта, задание настроек для карт по умолчанию, например, будет ли проигрываться видео, непрозрачность фонового изображения и прочая хрень, связанная с этим. Так же туда ещё выбор скинов и настройку громкости.
          -Все настройки хранить в файлике Settings, расположенном в локальном, доступном пользователю хранилище
          */
+        prepareLibrary()
         let LibraryMenuVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryMenuVC")
         present(LibraryMenuVC, animated: true) {
             print("Completed")

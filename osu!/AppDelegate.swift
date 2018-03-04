@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         print("External URL to unzip: \(url)")
-        if url.startAccessingSecurityScopedResource(){
+        if url.startAccessingSecurityScopedResource() || url.path.contains("/Documents/Inbox/"){
             main.unZip(url: url, deleteAfter: false)
             return true
         } else {
