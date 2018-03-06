@@ -15,6 +15,9 @@ class MainMenu: UIViewController {
     @IBOutlet weak var mainButton: UIButton!
     @IBOutlet weak var menuBackgroundImage: UIImageView!
     
+    let playButton = UIButton()
+    let settingsButton = UIButton()
+    
     var initialConstraints = [NSLayoutConstraint]()
     var newConstraints = [NSLayoutConstraint]()
     var mainButtonConstraints = [NSLayoutConstraint]()
@@ -35,6 +38,20 @@ class MainMenu: UIViewController {
         self.mainButton.layoutIfNeeded()
         self.menuBackgroundImage.layoutIfNeeded()
         
+        applyMotionEffect(toView: menuBackgroundImage, magnitude: 10)
+        applyMotionEffect(toView: mainButton, magnitude: -10)
+        applyMotionEffect(toView: playButton, magnitude: -10)
+        applyMotionEffect(toView: settingsButton, magnitude: -10)
+        
+        prepareLibrary()
+        
+        menuBackgroundImage.layer.zPosition = -1
+        mainButton.layer.zPosition = 1
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         NSLayoutConstraint.deactivate(self.initialConstraints)
         
         newConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 2/3))
@@ -53,25 +70,6 @@ class MainMenu: UIViewController {
             self.mainButton.alpha = 1
             self.menuBackgroundImage.alpha = 1
         }
-        
-        
-        applyMotionEffect(toView: menuBackgroundImage, magnitude: 10)
-        applyMotionEffect(toView: mainButton, magnitude: -10)
-        
-        prepareLibrary()
-        //===============================================================================================
-        menuBackgroundImage.layer.zPosition = -1
-        mainButton.layer.zPosition = 1
-
-        //Чтоб потом кнопки вылазили за основной кнопкой, но поверх фона==================================
-        
-        
-        //==========================================================================================
-        
-
-        //=================================================================================================
-        
-        
     }
 
     func applyMotionEffect (toView view:UIView, magnitude: Float){
@@ -88,8 +86,6 @@ class MainMenu: UIViewController {
         
         view.addMotionEffect(group)
     }
-     let playButton = UIButton()
-    let settingsButton = UIButton()
     
     @IBAction func mainButtonClicked(_ sender: Any) {
         /*
@@ -100,11 +96,6 @@ class MainMenu: UIViewController {
          -В настройки добавить выключатель параллакс эффекта, задание настроек для карт по умолчанию, например, будет ли проигрываться видео, непрозрачность фонового изображения и прочая хрень, связанная с этим. Так же туда ещё выбор скинов и настройку громкости.
          -Все настройки хранить в файлике Settings, расположенном в локальном, доступном пользователю хранилище
          */
-       
-        
-
-
-      
         if !isMainButtonPressed {
             playButton.frame = CGRect(x: mainButton.center.x - mainButton.frame.width/3.5, y: mainButton.center.y - mainButton.frame.width/5, width: mainButton.frame.width/1.5, height: mainButton.frame.width/5)
             playButton.layer.zPosition = 0
@@ -140,19 +131,7 @@ class MainMenu: UIViewController {
                 self.settingsButton.transform = CGAffineTransform(translationX: 0, y: 0)
                 
             })
-
-
-
         }
-      
-        
-        /*===============================================================================================
-         Закоментированную часть кода надо перенести в кнопку "Play"
-
-         =============================================================================================*/
-        
-        
-        
     }
     
         @objc func buttonPressed(sender: UIButton!){

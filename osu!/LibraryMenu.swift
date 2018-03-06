@@ -47,9 +47,11 @@ class LibraryMenu: UIViewController, UITableViewDelegate, UITableViewDataSource 
         tvSongs.delegate = self
         tvSongs.dataSource = self
         loadLibrary()
-        let randomIndex = Int(arc4random_uniform(UInt32(tvSongs.numberOfRows(inSection: 0))))
-        tvSongs.selectRow(at: IndexPath(row: randomIndex, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.middle)
-        tableView(tvSongs, didSelectRowAt: IndexPath(row: randomIndex, section: 0))
+        if Library.count > 0{
+            let randomIndex = Int(arc4random_uniform(UInt32(tvSongs.numberOfRows(inSection: 0))))
+            tvSongs.selectRow(at: IndexPath(row: randomIndex, section: 0), animated: true, scrollPosition: UITableViewScrollPosition.middle)
+            tableView(tvSongs, didSelectRowAt: IndexPath(row: randomIndex, section: 0))
+        }
     }
     
     func applyMotionEffect (toView view:UIView, magnitude: Float){
