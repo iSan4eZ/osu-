@@ -27,6 +27,7 @@ class MainMenu: UIViewController {
         super.viewDidLoad()
         Zip.addCustomFileExtension("osz")
         
+        
         if #available(iOS 11.0, *) {
             initialConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
             initialConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
@@ -118,14 +119,14 @@ class MainMenu: UIViewController {
             self.settingsButton.isUserInteractionEnabled = true
             //===================================
             //let target = MyTarget()
-            playButton.addTarget(target, action: #selector(buttonPressed), for: .touchDown)
+            playButton.addTarget(target, action: #selector(playPressed), for: .touchDown)
             //=======================================
             isMainButtonPressed = true
-       UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseInOut, animations: {
-            self.mainButton.transform = CGAffineTransform(translationX: -self.mainButton.frame.width/4, y: 0)
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseInOut, animations: {
+                self.mainButton.transform = CGAffineTransform(translationX: -self.mainButton.frame.width/4, y: 0)
             
-            self.playButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
-            self.settingsButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
+                self.playButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
+                self.settingsButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
             })
 
         }else if isMainButtonPressed{
@@ -134,7 +135,6 @@ class MainMenu: UIViewController {
             self.settingsButton.isUserInteractionEnabled = false
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 8, options: .curveEaseInOut, animations: {
                 self.mainButton.transform = CGAffineTransform(translationX: 0, y: 0)
-
                 self.playButton.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.settingsButton.transform = CGAffineTransform(translationX: 0, y: 0)
                 
@@ -142,10 +142,7 @@ class MainMenu: UIViewController {
         }
     }
     
-        @objc func buttonPressed(sender: UIButton!){
-        //=======================Действие кнопки play=======================
-            print("pressed")
-            
+        @objc func playPressed(sender: UIButton!){
             prepareLibrary()
             let LibraryMenuVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryMenuVC")
             present(LibraryMenuVC, animated: true) {
