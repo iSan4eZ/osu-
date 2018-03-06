@@ -27,8 +27,13 @@ class MainMenu: UIViewController {
         super.viewDidLoad()
         Zip.addCustomFileExtension("osz")
         
-        initialConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
-        initialConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
+        if #available(iOS 11.0, *) {
+            initialConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
+            initialConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 1/2))
+        } else {
+            initialConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1/2))
+            initialConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1/2))
+        }
         initialConstraints.append(self.menuBackgroundImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor))
         initialConstraints.append(self.menuBackgroundImage.bottomAnchor.constraint(equalTo: self.view.bottomAnchor))
         initialConstraints.append(self.menuBackgroundImage.topAnchor.constraint(equalTo: self.view.topAnchor))
@@ -54,8 +59,13 @@ class MainMenu: UIViewController {
         
         NSLayoutConstraint.deactivate(self.initialConstraints)
         
-        newConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 2/3))
-        newConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 2/3))
+        if #available(iOS 11.0, *) {
+            newConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 2/3))
+            newConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, multiplier: 2/3))
+        } else {
+            newConstraints.append(self.mainButton.widthAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 2/3))
+            newConstraints.append(self.mainButton.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 2/3))
+        }
         newConstraints.append(self.menuBackgroundImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 50))
         newConstraints.append(self.menuBackgroundImage.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 50))
         newConstraints.append(self.menuBackgroundImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -50))
@@ -63,13 +73,11 @@ class MainMenu: UIViewController {
         
         NSLayoutConstraint.activate(self.newConstraints)
         
-        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
             self.mainButton.superview!.layoutIfNeeded()
-        }, completion: nil)
-        UIView.animate(withDuration: 2) {
             self.mainButton.alpha = 1
             self.menuBackgroundImage.alpha = 1
-        }
+        }, completion: nil)
     }
 
     func applyMotionEffect (toView view:UIView, magnitude: Float){
