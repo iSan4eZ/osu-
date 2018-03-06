@@ -17,6 +17,8 @@ class MainMenu: UIViewController {
     
     var initialConstraints = [NSLayoutConstraint]()
     var newConstraints = [NSLayoutConstraint]()
+    var mainButtonConstraints = [NSLayoutConstraint]()
+    var isMainButtonPressed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +59,19 @@ class MainMenu: UIViewController {
         applyMotionEffect(toView: mainButton, magnitude: -10)
         
         prepareLibrary()
+        //===============================================================================================
+        menuBackgroundImage.layer.zPosition = -1
+        mainButton.layer.zPosition = 1
+
+        //Чтоб потом кнопки вылазили за основной кнопкой, но поверх фона==================================
+        
+        
+        //==========================================================================================
+        
+
+        //=================================================================================================
+        
+        
     }
 
     func applyMotionEffect (toView view:UIView, magnitude: Float){
@@ -73,6 +88,8 @@ class MainMenu: UIViewController {
         
         view.addMotionEffect(group)
     }
+     let playButton = UIButton()
+    let settingsButton = UIButton()
     
     @IBAction func mainButtonClicked(_ sender: Any) {
         /*
@@ -83,13 +100,76 @@ class MainMenu: UIViewController {
          -В настройки добавить выключатель параллакс эффекта, задание настроек для карт по умолчанию, например, будет ли проигрываться видео, непрозрачность фонового изображения и прочая хрень, связанная с этим. Так же туда ещё выбор скинов и настройку громкости.
          -Все настройки хранить в файлике Settings, расположенном в локальном, доступном пользователю хранилище
          */
-        prepareLibrary()
-        let LibraryMenuVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryMenuVC")
-        present(LibraryMenuVC, animated: true) {
-            print("Completed")
-            //completition code
+       
+        
+
+
+      
+        if !isMainButtonPressed {
+            playButton.frame = CGRect(x: mainButton.center.x - mainButton.frame.width/3.5, y: mainButton.center.y - mainButton.frame.width/5, width: mainButton.frame.width/1.5, height: mainButton.frame.width/5)
+            playButton.layer.zPosition = 0
+            view.addSubview(playButton)
+            settingsButton.frame = CGRect(x: mainButton.center.x - mainButton.frame.width/3.5 , y: mainButton.center.y + mainButton.frame.width/10, width: mainButton.frame.width/1.5, height: mainButton.frame.width/5)
+            settingsButton.layer.zPosition = 0
+            view.addSubview(settingsButton)
+            playButton.backgroundColor = UIColor.purple
+            settingsButton.backgroundColor = UIColor.purple
+            
+            self.playButton.isUserInteractionEnabled = true
+            self.settingsButton.isUserInteractionEnabled = true
+            //===================================
+            //let target = MyTarget()
+            playButton.addTarget(target, action: #selector(buttonPressed), for: .touchDown)
+            //=======================================
+            isMainButtonPressed = true
+       UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseInOut, animations: {
+            self.mainButton.transform = CGAffineTransform(translationX: -self.mainButton.frame.width/4, y: 0)
+            
+            self.playButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
+            self.settingsButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
+            })
+
+        }else if isMainButtonPressed{
+            isMainButtonPressed = false
+           self.playButton.isUserInteractionEnabled = false
+            self.settingsButton.isUserInteractionEnabled = false
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 8, options: .curveEaseInOut, animations: {
+                self.mainButton.transform = CGAffineTransform(translationX: 0, y: 0)
+
+                self.playButton.transform = CGAffineTransform(translationX: 0, y: 0)
+                self.settingsButton.transform = CGAffineTransform(translationX: 0, y: 0)
+                
+            })
+
+
+
         }
+      
+        
+        /*===============================================================================================
+         Закоментированную часть кода надо перенести в кнопку "Play"
+
+         =============================================================================================*/
+        
+        
+        
     }
+    
+        @objc func buttonPressed(sender: UIButton!){
+        //=======================Действие кнопки play=======================
+            print("pressed")
+            
+            prepareLibrary()
+            let LibraryMenuVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryMenuVC")
+            present(LibraryMenuVC, animated: true) {
+                print("Completed")
+                
+                //completition code
+            }
+        }
+    
+    
+    
     
     func prepareLibrary(){
         let fileManager = FileManager.default
