@@ -109,22 +109,23 @@ class MainMenu: UIViewController {
             playButton.frame = CGRect(x: mainButton.center.x - mainButton.frame.width/3.5, y: mainButton.center.y - mainButton.frame.width/5, width: mainButton.frame.width/1.5, height: mainButton.frame.width/5)
             playButton.layer.zPosition = 0
             view.addSubview(playButton)
+            
             settingsButton.frame = CGRect(x: mainButton.center.x - mainButton.frame.width/3.5 , y: mainButton.center.y + mainButton.frame.width/10, width: mainButton.frame.width/1.5, height: mainButton.frame.width/5)
             settingsButton.layer.zPosition = 0
             view.addSubview(settingsButton)
+            
             playButton.backgroundColor = UIColor.purple
             settingsButton.backgroundColor = UIColor.purple
             
             self.playButton.isUserInteractionEnabled = true
             self.settingsButton.isUserInteractionEnabled = true
-            //===================================
-            //let target = MyTarget()
-            playButton.addTarget(target, action: #selector(playPressed), for: .touchDown)
-            //=======================================
+            
+            playButton.addTarget(target, action: #selector(playPressed), for: .touchUpInside)
+            settingsButton.addTarget(target, action: #selector(settingsPressed), for: .touchUpInside)
+            
             isMainButtonPressed = true
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseInOut, animations: {
                 self.mainButton.transform = CGAffineTransform(translationX: -self.mainButton.frame.width/4, y: 0)
-            
                 self.playButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
                 self.settingsButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
             })
@@ -142,18 +143,17 @@ class MainMenu: UIViewController {
         }
     }
     
-        @objc func playPressed(sender: UIButton!){
-            prepareLibrary()
-            let LibraryMenuVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryMenuVC")
-            present(LibraryMenuVC, animated: true) {
-                print("Completed")
-                
-                //completition code
-            }
+    @objc func playPressed(sender: UIButton!){
+        prepareLibrary()
+        let LibraryMenuVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LibraryMenuVC")
+        present(LibraryMenuVC, animated: true) {
+            //completition code
         }
+    }
     
-    
-    
+    @objc func settingsPressed(sender: UIButton!){
+        
+    }
     
     func prepareLibrary(){
         let fileManager = FileManager.default
