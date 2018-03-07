@@ -74,7 +74,7 @@ class MainMenu: UIViewController {
         
         NSLayoutConstraint.activate(self.newConstraints)
         
-        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1.5, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
             self.mainButton.superview!.layoutIfNeeded()
             self.mainButton.alpha = 1
             self.menuBackgroundImage.alpha = 1
@@ -124,7 +124,7 @@ class MainMenu: UIViewController {
             settingsButton.addTarget(target, action: #selector(settingsPressed), for: .touchUpInside)
             
             isMainButtonPressed = true
-            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: .curveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: [.allowUserInteraction, .curveEaseInOut], animations: {
                 self.mainButton.transform = CGAffineTransform(translationX: -self.mainButton.frame.width/4, y: 0)
                 self.playButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
                 self.settingsButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
@@ -134,7 +134,7 @@ class MainMenu: UIViewController {
             isMainButtonPressed = false
            self.playButton.isUserInteractionEnabled = false
             self.settingsButton.isUserInteractionEnabled = false
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 8, options: .curveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 8, options: [.allowUserInteraction, .curveEaseInOut] ,  animations: {
                 self.mainButton.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.playButton.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.settingsButton.transform = CGAffineTransform(translationX: 0, y: 0)
