@@ -51,6 +51,9 @@ class MainMenu: UIViewController {
         
         prepareLibrary()
         
+        playButton.addTarget(target, action: #selector(playPressed), for: .touchUpInside)
+        settingsButton.addTarget(target, action: #selector(settingsPressed), for: .touchUpInside)
+
         menuBackgroundImage.layer.zPosition = -1
         mainButton.layer.zPosition = 1
     }
@@ -119,9 +122,6 @@ class MainMenu: UIViewController {
             
             self.playButton.isUserInteractionEnabled = true
             self.settingsButton.isUserInteractionEnabled = true
-            
-            playButton.addTarget(target, action: #selector(playPressed), for: .touchUpInside)
-            settingsButton.addTarget(target, action: #selector(settingsPressed), for: .touchUpInside)
             
             isMainButtonPressed = true
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: [.allowUserInteraction, .curveEaseInOut], animations: {
