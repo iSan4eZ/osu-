@@ -12,6 +12,7 @@ import AVFoundation
 
 class MainMenu: UIViewController {
 
+    @IBOutlet weak var settingsMenu: UITableView!
     @IBOutlet weak var mainButton: UIButton!
     @IBOutlet weak var menuBackgroundImage: UIImageView!
     
@@ -26,6 +27,10 @@ class MainMenu: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Zip.addCustomFileExtension("osz")
+        
+        
+        //Убираю меню за грань экрана, чтоб потом выдвигать
+        settingsMenu.frame.origin = CGPoint(x:settingsMenu.frame.origin.x - settingsMenu.frame.width * 1.2, y:settingsMenu.frame.origin.y)
         
         
         if #available(iOS 11.0, *) {
@@ -124,6 +129,8 @@ class MainMenu: UIViewController {
             self.settingsButton.isUserInteractionEnabled = true
             
             isMainButtonPressed = true
+            playButton.isHidden = false
+            settingsButton.isHidden = false
             UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 10, options: [.allowUserInteraction, .curveEaseInOut], animations: {
                 self.mainButton.transform = CGAffineTransform(translationX: -self.mainButton.frame.width/4, y: 0)
                 self.playButton.transform = CGAffineTransform(translationX: self.mainButton.frame.width/3.5, y: 0)
@@ -138,8 +145,26 @@ class MainMenu: UIViewController {
                 self.mainButton.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.playButton.transform = CGAffineTransform(translationX: 0, y: 0)
                 self.settingsButton.transform = CGAffineTransform(translationX: 0, y: 0)
+            }, completion:{(finished: Bool)
+                in
+                self.playButton.isHidden = true
+                self.settingsButton.isHidden = true
                 
             })
+                if self.settingsMenu.isHidden == false{
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 8, options: [.allowUserInteraction, .curveEaseInOut] ,  animations: {
+                        self.settingsMenu.transform = CGAffineTransform(translationX:0, y: 0)
+                        self.mainButton.transform =    CGAffineTransform(translationX:0, y: 0)
+
+                    }, completion:{(finished: Bool)
+                        in
+                        self.settingsMenu.isHidden = true
+                    })
+                    self.playButton.isUserInteractionEnabled = false
+                    self.settingsButton.isUserInteractionEnabled = false
+                }
+                
+            
         }
     }
     
@@ -152,7 +177,19 @@ class MainMenu: UIViewController {
     }
     
     @objc func settingsPressed(sender: UIButton!){
-        
+
+        if settingsMenu.isHidden == true{
+            settingsMenu.isHidden = false
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 8, options: [.allowUserInteraction, .curveEaseInOut] ,  animations: {
+                self.settingsMenu.transform = CGAffineTransform(translationX:self.settingsMenu.frame.width * 1.1, y: 0)
+                self.mainButton.transform =    CGAffineTransform(translationX:self.mainButton.frame.width/3.5, y: 0)
+              
+        })
+            self.playButton.isUserInteractionEnabled = false
+            self.settingsButton.isUserInteractionEnabled = false
+        }
+
+
     }
     
     func prepareLibrary(){

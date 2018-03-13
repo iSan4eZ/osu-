@@ -29,6 +29,12 @@
                                     <action selector="mainButtonClicked:" destination="yVe-SQ-2CV" eventType="touchUpInside" id="1uN-Ea-Joz"/>
                                 </connections>
                             </button>
+                            <tableView hidden="YES" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0Aw-uW-GJj">
+                                <rect key="frame" x="0.0" y="0.0" width="274" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -42,6 +48,7 @@
                     <connections>
                         <outlet property="mainButton" destination="kLT-Z1-YeV" id="r3i-my-ufs"/>
                         <outlet property="menuBackgroundImage" destination="WoV-bN-zDk" id="izf-NF-okw"/>
+                        <outlet property="settingsMenu" destination="0Aw-uW-GJj" id="QeR-0U-SIm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WYP-CQ-8Je" userLabel="First Responder" sceneMemberID="firstResponder"/>
